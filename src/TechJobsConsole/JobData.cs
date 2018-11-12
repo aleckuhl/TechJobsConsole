@@ -49,12 +49,35 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToUpper().Contains(value.ToUpper()))
                 {
                     jobs.Add(row);
                 }
             }
 
+            return jobs;
+        }
+
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+                foreach (string job in row.Values)
+                {
+                    if (job.ToUpper().Contains(value.ToUpper()))
+                    {
+                        if (jobs.Contains(row) == false)
+                        {
+                            jobs.Add(row);
+                        }
+                        
+                    }
+                }
+            }
             return jobs;
         }
 
@@ -102,6 +125,7 @@ namespace TechJobsConsole
             IsDataLoaded = true;
         }
 
+        
         /*
          * Parse a single line of a CSV file into a string array
          */
